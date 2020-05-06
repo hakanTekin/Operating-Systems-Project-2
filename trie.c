@@ -1,0 +1,119 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h> 
+#include <stdbool.h> 
+
+#define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0]) 
+  
+// Alphabet size (# of symbols) 
+#define ALPHABET_SIZE (91) 
+
+// Converts key current character into index 
+// use only 'a' through 'z' and lower case 
+#define CHAR_TO_INDEX(c) ((int)c - (int)' ') 
+
+
+struct node{
+    int ocurrence;
+    struct node *nexts[ALPHABET_SIZE];
+};
+
+struct node *create_empty_node(void){
+    struct node *pNode = NULL; 
+    pNode = (struct node *)malloc(sizeof(struct node));   
+    if (pNode) 
+    { 
+        int i;
+        pNode->ocurrence = 0;
+        for (i = 0; i < ALPHABET_SIZE; i++)
+            pNode->nexts[i] = NULL; 
+    }
+    return pNode;
+}
+
+void insert(struct node *root, const char *key){
+    int level;
+    int length = strlen(key);
+    int index;
+    struct node *pCrawl = root;
+
+    for (level = 0; level < length; level++)
+    {
+        index = CHAR_TO_INDEX(key[level]);
+
+        if ( !pCrawl->nexts[index] ) 
+            pCrawl->nexts[index] = create_empty_node();
+
+        pCrawl = pCrawl->nexts[index];
+    }
+
+    pCrawl->ocurrence++; 
+}
+
+int search(struct node *r, const char *key){
+    int level;
+    int length = strlen(key);
+    int index;
+    struct node *pCrawl = r;
+    for (level = 0; level < length; level++) 
+    { 
+        index = CHAR_TO_INDEX(key[level]); 
+  
+        if (!pCrawl->nexts[index]) 
+            return false; 
+  
+        pCrawl = pCrawl->nexts[index]; 
+    } 
+    if((pCrawl != NULL && pCrawl->ocurrence > 0))
+        return pCrawl->ocurrence;
+    else if(pCrawl != NULL)
+        return 0;//NOPE non existent
+    else
+        return -1; //-1 is error, if something terrible happens, this is it
+}
+
+// function to display the content of Trie 
+void display(struct node* root, char str[], int level) 
+{ 
+    // If node is leaf node, it indicates end 
+    // of string, so a null character is added 
+    // and string is displayed 
+    if (root->ocurrence > 0)  
+    { 
+        str[level] = '\0';
+        printf("%s\n", str);
+        update_output_file(str, root->ocurrence);
+
+    } 
+  
+    int i; 
+    for (i = 0; i < ALPHABET_SIZE; i++)  
+    { 
+        // if NON NULL child is found 
+        // add parent key to str and 
+        // call the display function recursively 
+        // for child node 
+        if (root->nexts[i])  
+        { 
+            str[level] = i + ' '; 
+            display(root->nexts[i], str, level + 1);
+        } 
+    } 
+} 
+
+
+int main(){
+    printf("PAPA \n");
+    char keys[][30] = {"the yarrakların effendisi", "a", "there", "answer", "any", 
+                     "by", "bye", "their", "their"};
+    struct node *root = create_empty_node(); 
+  
+    // Construct trie
+    int i; 
+    for (i = 0; i < ARRAY_SIZE(keys); i++) 
+        insert(root, keys[i]);
+
+    char str[9999];
+    display(root, str,0);
+    return 0;
+}
