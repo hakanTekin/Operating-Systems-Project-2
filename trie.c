@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <stdbool.h> 
+#include "file_operations.c"
 
 #define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0]) 
   
@@ -12,6 +13,7 @@
 // use only 'a' through 'z' and lower case 
 #define CHAR_TO_INDEX(c) ((int)c - (int)' ') 
 
+#define DEFAULT_OUTPUT_NAME "output.txt"
 
 struct node{
     int ocurrence;
@@ -32,6 +34,7 @@ struct node *create_empty_node(void){
 }
 
 void insert(struct node *root, const char *key){
+    
     int level;
     int length = strlen(key);
     int index;
@@ -73,7 +76,7 @@ int search(struct node *r, const char *key){
 }
 
 // function to display the content of Trie 
-void display(struct node* root, char str[], int level) 
+void display(struct node* root, char str[], int level, FILE *f) 
 { 
     // If node is leaf node, it indicates end 
     // of string, so a null character is added 
@@ -81,8 +84,9 @@ void display(struct node* root, char str[], int level)
     if (root->ocurrence > 0)  
     { 
         str[level] = '\0';
-        printf("%s\n", str);
-        update_output_file(str, root->ocurrence);
+        printf("%s %d\n", str, root->ocurrence);
+        //it should be written to the output file around here.
+        update_output_file(str, root->ocurrence,f);
 
     } 
   
@@ -95,25 +99,8 @@ void display(struct node* root, char str[], int level)
         // for child node 
         if (root->nexts[i])  
         { 
-            str[level] = i + ' '; 
-            display(root->nexts[i], str, level + 1);
+            str[level] = i + ' ';
+            display(root->nexts[i], str, level + 1, f);
         } 
-    } 
-} 
-
-
-int main(){
-    printf("PAPA \n");
-    char keys[][30] = {"the yarrakların effendisi", "a", "there", "answer", "any", 
-                     "by", "bye", "their", "their"};
-    struct node *root = create_empty_node(); 
-  
-    // Construct trie
-    int i; 
-    for (i = 0; i < ARRAY_SIZE(keys); i++) 
-        insert(root, keys[i]);
-
-    char str[9999];
-    display(root, str,0);
-    return 0;
+    }
 }

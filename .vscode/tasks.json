@@ -6,9 +6,9 @@
             "command": "/usr/bin/gcc",
             "args": [
                 "-g",
-                "${file}",
+                "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main.c",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main"
             ],
             "options": {
                 "cwd": "/usr/bin"
