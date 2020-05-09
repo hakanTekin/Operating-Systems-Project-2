@@ -1,8 +1,11 @@
+#ifndef LIBRARY_IMPORTS
+#define LIBRARY_IMPORTS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#endif
 
 #ifndef TRIE_C
 #define TRIE_C
@@ -23,9 +26,8 @@
  * 
  *  OBSERVE EXECUTION TIME
  */
-void task2()
-{ 
-    char *data[] = {"data0.txt"};
+void task2(char *data[])
+{
     struct node *root = create_empty_node();
 
     FILE *in_file;
