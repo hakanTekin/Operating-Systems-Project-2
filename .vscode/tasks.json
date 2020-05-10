@@ -8,7 +8,8 @@
                 "-g",
                 "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main.c",
                 "-o",
-                "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main"
+                "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main",
+                "-pthread"
             ],
             "options": {
                 "cwd": "/usr/bin"

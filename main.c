@@ -30,7 +30,8 @@
 #endif
 
 //Names of the input files, this could be changed to an command line argument tho.
-char *data[] = {"data0.txt"};
+char *data[] = {"data0.txt", "data-1.txt"};
+int data_size = sizeof(data) / sizeof(data[0]);
 
 void remove_new_line_char_from_str(char *str){
     char *temp = strchr(str, '\n');
@@ -41,23 +42,23 @@ void remove_new_line_char_from_str(char *str){
 int main()
 {
     clock_t start2 = clock();
-    task2(data);
+    task2(data, data_size);
     clock_t end2 = clock();
 
     clock_t start3 = clock();
-    task3(data);
+    task3(data, data_size);
     clock_t end3 = clock();
 
     clock_t start4 = clock();
-    task4(data);
+    task4(data, data_size);
     clock_t end4 = clock();
 
     clock_t start5 = clock();
-    task5(data);
+    task5(data, data_size);
     clock_t end5 = clock();
 
     clock_t start6 = clock();
-    task6(data);
+    task6(data, data_size);
     clock_t end6 = clock();
 
     printf("\n---All executions completed---\n");

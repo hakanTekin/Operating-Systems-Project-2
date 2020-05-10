@@ -39,29 +39,31 @@ int size_of_data;
 void open_files(char *data[], int *f_array_count){
     
     f = (FILE **)malloc(sizeof(FILE) * size_of_data);
-    
+    int x = 0;
     for (size_t i = 0; i < size_of_data; i++)
     {
         FILE *file = malloc(sizeof(FILE));
         file = fopen(data[i], "r");
         if(file != NULL){
-            f[*f_array_count++] = file;
+            f[x++] = file;
 
         }
     }
+    *f_array_count = x;
 }
-void task3(char *data[])
+void task3(char *data[], int data_size)
 {
     char buffer[BUFFER_LENGTH+1];
-    size_of_data = sizeof(data) / sizeof(data[0]);
+    size_of_data = data_size;
     int f_array_size = 0;
     open_files(data, &f_array_size);
 
     struct node *root = create_empty_node();
 
-    for (size_t i = 0; i < size_of_data; i++)
+    for (size_t i = 0; i < f_array_size; i++)
     {
         while( 1 ){
+            printf("HEHHEHEHEyyy\n");
             size_t x = fread( buffer, 1, BUFFER_LENGTH, f[i] );
             if(x == 0)
                 break;
@@ -97,6 +99,7 @@ void task3(char *data[])
         }
         fclose(f[i]);
     }
+
     FILE *out_file = open_file_from_file_name(DEFAULT_OUTPUT_NAME_TASK_3, "w");
     for (size_t i = 0; i < strlen(buffer); i++)
     {

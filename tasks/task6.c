@@ -29,7 +29,7 @@
  * Idea is code will only use disk access once, 
  * so there may be a speed-up in execution time
  */
-void task6(char *data[])
+void task6(char *data[], int data_size)
 {
     
 }

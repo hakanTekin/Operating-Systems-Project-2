@@ -33,14 +33,15 @@
  * 
  *  OBSERVE EXECUTION TIME
  */
-void task2(char *data[])
+void task2(char *data[], int data_length)
 {
     struct node *root = create_empty_node();
-
     FILE *in_file;
     FILE *out_file;
     char buffer[BUFFER_LENGTH];
-    for (size_t i = 0; i < 1; i++)
+    
+
+    for (size_t i = 0; i < data_length; i++)
     {
         in_file = open_file_from_file_name(data[i], NULL);
         if(in_file != NULL){

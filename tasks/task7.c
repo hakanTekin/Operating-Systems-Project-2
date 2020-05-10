@@ -22,7 +22,7 @@
  * Improve one of the above methods
  * According to their execution times
  */
-void task7(char *data[])
+void task7(char *data[], int data_size)
 {
     
 }

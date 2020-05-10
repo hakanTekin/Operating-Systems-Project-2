@@ -27,5 +27,5 @@
  * OBSERVE EXECUTION TIME
  * 
  */
-void task5(char *data[])
+void task5(char *data[], int data_size)
 {}
