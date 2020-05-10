@@ -2,7 +2,12 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <stdbool.h> 
+
+#ifndef FILE_OPERATIONS
+#define FILE_OPERATIONS
 #include "file_operations.c"
+#endif
+
 
 #define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0]) 
   
@@ -82,9 +87,9 @@ void display(struct node* root, char str[], int level, FILE *f)
     // of string, so a null character is added 
     // and string is displayed 
     if (root->ocurrence > 0)  
-    { 
+    {
         str[level] = '\0';
-        printf("%s %d\n", str, root->ocurrence);
+        //printf("%s %d\n", str, root->ocurrence);
         //it should be written to the output file around here.
         update_output_file(str, root->ocurrence,f);
 

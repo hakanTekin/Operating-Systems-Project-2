@@ -9,6 +9,12 @@
 #include "trie.c"
 #endif
 
+#ifndef FILE_OPERATIONS
+#define FILE_OPERATIONS
+#include "file_operations.c"
+#endif
+
+
 #ifndef TASK_INCLUDES
 #define TASK_INCLUDES
 #include "tasks/task2.c"
@@ -20,20 +26,18 @@
 #endif
 
 #ifndef BUFFER_LENGTH
-#define BUFFER_LENGTH 9999
+#define BUFFER_LENGTH 100
 #endif
 
 //Names of the input files, this could be changed to an command line argument tho.
 char *data[] = {"data0.txt"};
 
-void remove_new_line_from_str(char *str){
+void remove_new_line_char_from_str(char *str){
     char *temp = strchr(str, '\n');
     if(temp != NULL){
         *temp = '\0';
     }
 }
-
-
 int main()
 {
     clock_t start2 = clock();
