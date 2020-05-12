@@ -30,7 +30,7 @@
 #endif
 
 //Names of the input files, this could be changed to an command line argument tho.
-char *data[] = {"data-6.txt", "data-7.txt"};
+char *data[] = {"data-6.txt", "data-6.txt", "data-6.txt", "data-6.txt"};
 int data_size = sizeof(data) / sizeof(data[0]);
 
 void remove_new_line_char_from_str(char *str){

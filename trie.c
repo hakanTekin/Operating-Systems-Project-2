@@ -62,27 +62,6 @@ void insert(struct node *root, const unsigned char *key){
     pCrawl->ocurrence++; 
 }
 
-void insert_threaded(struct node *root, const unsigned char *key, pthread_mutex_t mutex_lock){
-
-    int level;
-    int length = strlen(key);
-    int index;
-    struct node *pCrawl = root;
-
-    pthread_mutex_lock(&mutex_lock);
-
-    for (level = 0; level < length; level++)
-    {
-        index = CHAR_TO_INDEX(key[level]);
-        if ( !pCrawl->nexts[index] ) 
-            pCrawl->nexts[index] = create_empty_node();
-
-        pCrawl = pCrawl->nexts[index];
-    }
-
-    pCrawl->ocurrence++; 
-    pthread_mutex_unlock(&mutex_lock);
-}
 
 int search(struct node *r, const char *key){
     int level;

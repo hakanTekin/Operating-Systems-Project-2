@@ -45,8 +45,10 @@ void *apply_threaded(void *a)
         while (fgets(buffer, BUFFER_LENGTH, in_file))
         {
             remove_new_line_char_from_str(buffer);
+            //insert(root, buffer);
+            pthread_mutex_lock(&mutex_lock);
             insert(root, buffer);
-            //insert(root, buffer, mutex_lock);
+            pthread_mutex_unlock(&mutex_lock);
         }
     }
     else
