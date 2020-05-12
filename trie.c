@@ -8,11 +8,16 @@
 #include "file_operations.c"
 #endif
 
+#ifndef PTHREAD_IMPORT
+#define PTHREAD_IMPORT
+#include <pthread.h>
+#endif
+
 
 #define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0]) 
   
 // Alphabet size (# of symbols) 
-#define ALPHABET_SIZE (91) 
+#define ALPHABET_SIZE (224) 
 
 // Converts key current character into index 
 // use only 'a' through 'z' and lower case 
@@ -38,7 +43,7 @@ struct node *create_empty_node(void){
     return pNode;
 }
 
-void insert(struct node *root, const char *key){
+void insert(struct node *root, const unsigned char *key){
     
     int level;
     int length = strlen(key);
@@ -48,7 +53,6 @@ void insert(struct node *root, const char *key){
     for (level = 0; level < length; level++)
     {
         index = CHAR_TO_INDEX(key[level]);
-
         if ( !pCrawl->nexts[index] ) 
             pCrawl->nexts[index] = create_empty_node();
 
@@ -56,6 +60,28 @@ void insert(struct node *root, const char *key){
     }
 
     pCrawl->ocurrence++; 
+}
+
+void insert_threaded(struct node *root, const unsigned char *key, pthread_mutex_t mutex_lock){
+
+    int level;
+    int length = strlen(key);
+    int index;
+    struct node *pCrawl = root;
+
+    pthread_mutex_lock(&mutex_lock);
+
+    for (level = 0; level < length; level++)
+    {
+        index = CHAR_TO_INDEX(key[level]);
+        if ( !pCrawl->nexts[index] ) 
+            pCrawl->nexts[index] = create_empty_node();
+
+        pCrawl = pCrawl->nexts[index];
+    }
+
+    pCrawl->ocurrence++; 
+    pthread_mutex_unlock(&mutex_lock);
 }
 
 int search(struct node *r, const char *key){
@@ -108,4 +134,13 @@ void display(struct node* root, char str[], int level, FILE *f)
             display(root->nexts[i], str, level + 1, f);
         } 
     }
+}
+
+void free_trie_allocation(struct node* root){
+    for (size_t i = 0; i < ALPHABET_SIZE; i++)
+    {
+        if(root->nexts[i])
+            free_trie_allocation(root->nexts[i]);
+    }
+    free(root);
 }

@@ -63,17 +63,16 @@ void task3(char *data[], int data_size)
     for (size_t i = 0; i < f_array_size; i++)
     {
         while( 1 ){
-            printf("HEHHEHEHEyyy\n");
             size_t x = fread( buffer, 1, BUFFER_LENGTH, f[i] );
             if(x == 0)
                 break;
             if(x != BUFFER_LENGTH || x == EOF)
-                buffer[x] = '\0';
+                buffer[x] = '\n';
+                buffer[x+1] = '\0';
             int new_line_count = 0;
             char *last_new_line;
             char *Start = &buffer[0];
-            char temp[9999] = {'\0'};
-            printf("%d\n", strlen(buffer));
+            unsigned char temp[9999] = {'\0'};
 
             /**
              * TODO: This is an extremely inefficent way to iterate,
@@ -82,18 +81,21 @@ void task3(char *data[], int data_size)
             */
             for (size_t j = 0; j <= strlen(buffer); j++)
             {
-                if(buffer[j] == '\n' || buffer[j] == '\0'){
+                if(buffer[j] == '\n'){
                     new_line_count++;
                     last_new_line = &buffer[j];
                     strncpy(temp, Start, last_new_line-Start);
                     temp[last_new_line-Start] = '\0';
-                    printf("%s\n", temp);
+                    //printf("%s\n", temp);
                     Start = last_new_line+1;
+                    if(strcmp(temp, "young ass ") == 0){
+                        printf("HEYYO\n");
+                    }
                     insert(root, temp);
                 }
             }
             if(strlen(buffer) == 9999){
-                printf("%p\n", &buffer[strlen(buffer)] );
+                //printf("%p\n", &buffer[strlen(buffer)] );
                 fseek(f[i], -(&buffer[strlen(buffer)] - last_new_line)+1, SEEK_CUR);
             }
         }
@@ -110,4 +112,6 @@ void task3(char *data[], int data_size)
     }
     display(root, buffer, 0, out_file);
     fclose(out_file);
+
+    free_trie_allocation(root);
 }

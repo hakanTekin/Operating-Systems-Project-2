@@ -29,12 +29,14 @@ struct args_struct
     struct node *n;
 };
 
+pthread_mutex_t mutex_lock;
+
 void *apply_threaded(void *a)
 {
     struct args_struct *args = (struct args_struct *)a;
     char *file_name = args->file_name;
     struct node *root = args->n;
-    char buffer[BUFFER_LENGTH];
+    unsigned char buffer[BUFFER_LENGTH];
     FILE *in_file;
     in_file = open_file_from_file_name(file_name, NULL);
     if (in_file != NULL)
@@ -44,10 +46,13 @@ void *apply_threaded(void *a)
         {
             remove_new_line_char_from_str(buffer);
             insert(root, buffer);
+            //insert(root, buffer, mutex_lock);
         }
     }
     else
         printf("%s could not be opened\n", file_name);
+
+     printf("A THREAD IS COMPLETED\n");
 }
 
 /**
@@ -64,6 +69,11 @@ void *apply_threaded(void *a)
  */
 void task4(char *data[], int data_length)
 {
+
+    if(pthread_mutex_init(&mutex_lock, NULL) != 0){
+        printf("Mutex init failed\n");
+        return -117;
+    }
     struct node *root = create_empty_node();
 
     FILE *in_file;
@@ -81,6 +91,7 @@ void task4(char *data[], int data_length)
         args->n = root;
 
         pthread_create(&threads[threads_count++], NULL, apply_threaded, args);
+        printf("ONE THREAD CREATED BEFORE THIS WAS PRINTED\n");
     }
     
     for (int j = 0; j < threads_count; j++)
@@ -89,8 +100,9 @@ void task4(char *data[], int data_length)
         printf("I wait is end for thread\n");
     }
 
-    out_file = open_file_from_file_name(DEFAULT_OUTPUT_NAME_TASK_4, "w");
+    printf("THIS SHOULD NOT BE REACHED BEFORE ALL THE THREADS ARE DONE\n");
 
+    out_file = open_file_from_file_name(DEFAULT_OUTPUT_NAME_TASK_4, "w");
     for (size_t i = 0; i < strlen(buffer); i++)
     {
         if (buffer[i] != '\0')
@@ -105,4 +117,6 @@ void task4(char *data[], int data_length)
     }else{
         printf("Hahahha\n");
     }
+
+    free_trie_allocation(root);
 }

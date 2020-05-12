@@ -38,7 +38,7 @@ void task2(char *data[], int data_length)
     struct node *root = create_empty_node();
     FILE *in_file;
     FILE *out_file;
-    char buffer[BUFFER_LENGTH];
+    unsigned char buffer[BUFFER_LENGTH];
     
 
     for (size_t i = 0; i < data_length; i++)
@@ -64,4 +64,6 @@ void task2(char *data[], int data_length)
     }
     display(root, buffer, 0, out_file);
     fclose(in_file);
+
+    free_trie_allocation(root);
 }
