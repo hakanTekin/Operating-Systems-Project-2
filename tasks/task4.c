@@ -23,15 +23,21 @@
 
 #define DEFAULT_OUTPUT_NAME_TASK_4 "output_4.txt"
 
+
+#ifndef ARGS_STRUCT
+#define ARGS_STRUCT
+
 struct args_struct
 {
     char file_name[500];
     struct node *n;
 };
 
+#endif
+
 pthread_mutex_t mutex_lock;
 
-void *apply_threaded(void *a)
+void *apply_threaded_task_4(void *a)
 {
     struct args_struct *args = (struct args_struct *)a;
     char *file_name = args->file_name;
@@ -92,7 +98,7 @@ void task4(char *data[], int data_length)
         strcpy(args->file_name, data[i]);
         args->n = root;
 
-        pthread_create(&threads[threads_count++], NULL, apply_threaded, args);
+        pthread_create(&threads[threads_count++], NULL, apply_threaded_task_4, args);
         printf("ONE THREAD CREATED BEFORE THIS WAS PRINTED\n");
     }
     
