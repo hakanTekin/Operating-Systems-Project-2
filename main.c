@@ -42,25 +42,25 @@ void remove_new_line_char_from_str(char *str){
 int main()
 {
     clock_t start2 = clock();
-    task2(data, data_size);
+    //task2(data, data_size);
     clock_t end2 = clock();
 
     printf("TASK 2 FINISHED\n");
 
     clock_t start3 = clock();
-    task3(data, data_size);
+    //task3(data, data_size);
     clock_t end3 = clock();
 
     printf("TASK 3 FINISHED\n");
 
     clock_t start4 = clock();
-    task4(data, data_size);
+    //task4(data, data_size);
     clock_t end4 = clock();
 
     printf("TASK 4 FINISHED\n");
 
     clock_t start5 = clock();
-    task5(data, data_size);
+   // task5(data, data_size);
     clock_t end5 = clock();
 
     clock_t start6 = clock();
