@@ -34,7 +34,7 @@
 void task6(char *data[], int data_size)
 {
     FILE *fptr;
-    struct node *root = malloc(sizeof(struct node));
+    struct node *root = create_empty_node();
     unsigned char *line_buffer;
     char *buffer = NULL;
     for (size_t i = 0; i < data_size; i++)
@@ -66,6 +66,5 @@ void task6(char *data[], int data_size)
     display(root, line_buffer_2, 0, output);
     //free buffer
     free(buffer);
-    free(line_buffer);
     free_trie_allocation(root);
 }

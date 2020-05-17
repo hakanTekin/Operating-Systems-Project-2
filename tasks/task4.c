@@ -80,7 +80,7 @@ void task4(char *data[], int data_length)
 
     if(pthread_mutex_init(&mutex_lock, NULL) != 0){
         printf("Mutex init failed\n");
-        return -117;
+        return;
     }
     struct node *root = create_empty_node();
 

@@ -2,13 +2,28 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "gcc build active file",
+            "label": "gcc build main file",
             "command": "/usr/bin/gcc",
             "args": [
                 "-g",
                 "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main.c",
                 "-o",
                 "/home/khan/Documents/vsCodeProjects/Operating-Systems-Project-2/main",
+                "-pthread"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "gcc build active file",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-g",
+                "${workspaceFolder}/${fileBasename}",
+                "-o",
+                "${workspaceFolder}/${fileBasenameNoExtension}",
                 "-pthread"
             ],
             "options": {

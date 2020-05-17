@@ -109,7 +109,7 @@ void task5(char *data[], int data_length)
 
     if(pthread_mutex_init(&mutex_lock, NULL) != 0){
         printf("Mutex init failed\n");
-        return -117;
+        return ;
     }
     struct node *main_root = create_empty_node();
 
@@ -120,7 +120,7 @@ void task5(char *data[], int data_length)
     struct node **roots = (struct node **) malloc(sizeof(struct args_struct) * data_length);
     if(roots == NULL){
         printf("ROOTS IS NULL\n");
-        return -1;
+        return ;
     }
 
     //There should be as much threads as there are files in data array
@@ -139,7 +139,7 @@ void task5(char *data[], int data_length)
     
     for (int j = 0; j < threads_count; j++)
     {
-        pthread_join(threads[j], NULL);
+        pthread_join((pthread_t *)threads[j], NULL);
         printf("I wait is end for thread\n");
     }
 

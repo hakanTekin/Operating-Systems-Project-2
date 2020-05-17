@@ -14,7 +14,6 @@
 #include "file_operations.c"
 #endif
 
-
 #ifndef TASK_INCLUDES
 #define TASK_INCLUDES
 #include "tasks/task2.c"
@@ -30,19 +29,36 @@
 #endif
 
 //Names of the input files, this could be changed to an command line argument tho.
-char *data[] = {"data-6.txt", "data-6.txt", "data-6.txt", "data-6.txt"};
-int data_size = sizeof(data) / sizeof(data[0]);
-
-void remove_new_line_char_from_str(char *str){
+void remove_new_line_char_from_str(char *str)
+{
     char *temp = strchr(str, '\n');
-    if(temp != NULL){
+    if (temp != NULL)
+    {
         *temp = '\0';
     }
 }
-int main()
+int main(int argc, char **argv)
 {
+    char *datax[] = {"data-6.txt", "data-6.txt", "data-6.txt"};
+    char **data;
+    int data_size;
+    if (argc > 1)
+    { //Means there are some arguments. The arguments should be the names of data files
+        data = (char **)malloc(sizeof(void *) * argc - 1);
+        for (size_t i = 1; i < argc; i++)
+            data[i - 1] = argv[i];
+        data_size = argc - 1;
+    }
+    else
+    {
+        data = datax;
+        data_size = sizeof(datax) / sizeof(datax[0]);
+    }
+
+    printf("Data size is %d\n", data_size);
+
     clock_t start2 = clock();
-    //task2(data, data_size);
+    task2(data, data_size);
     clock_t end2 = clock();
 
     printf("TASK 2 FINISHED\n");
@@ -54,26 +70,26 @@ int main()
     printf("TASK 3 FINISHED\n");
 
     clock_t start4 = clock();
-    //task4(data, data_size);
+    //task4(data, data_size); //Memory is freed
     clock_t end4 = clock();
 
     printf("TASK 4 FINISHED\n");
 
     clock_t start5 = clock();
-   // task5(data, data_size);
+    //task5(data, data_size); //Memory is freed
     clock_t end5 = clock();
 
     clock_t start6 = clock();
-    task6(data, data_size);
+   //task6(data, data_size);
     clock_t end6 = clock();
 
     printf("\n---All executions completed---\n");
 
-    printf("%-40s : %-20d\n", "Task2 Execution time", end2-start2);
-    printf("%-40s : %-20d\n", "Task3 Execution time", end3-start3);
-    printf("%-40s : %-20d\n", "Task4 Execution time", end4-start4);
-    printf("%-40s : %-20d\n", "Task5 Execution time", end5-start5);
-    printf("%-40s : %-20d\n", "Task6 Execution time", end6-start6);
+    printf("%-40s : %-20ld\n", "Task2 Execution time", end2 - start2);
+    printf("%-40s : %-20ld\n", "Task3 Execution time", end3 - start3);
+    printf("%-40s : %-20ld\n", "Task4 Execution time", end4 - start4);
+    printf("%-40s : %-20ld\n", "Task5 Execution time", end5 - start5);
+    printf("%-40s : %-20ld\n", "Task6 Execution time", end6 - start6);
 
     return 4000;
 }

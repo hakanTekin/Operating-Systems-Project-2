@@ -32,7 +32,7 @@ struct node{
 
 struct node *create_empty_node(void){
     struct node *pNode = NULL; 
-    pNode = (struct node *)malloc(sizeof(struct node));   
+    pNode = (struct node *)malloc(sizeof(struct node));
     if (pNode) 
     { 
         int i;
@@ -55,7 +55,7 @@ void insert(struct node *root, const unsigned char *key){
         index = CHAR_TO_INDEX(key[level]);
         if ( !pCrawl->nexts[index] ) 
             pCrawl->nexts[index] = create_empty_node();
-
+        
         pCrawl = pCrawl->nexts[index];
     }
 
@@ -91,7 +91,7 @@ void display(struct node* root, char str[], int level, FILE *f)
     // If node is leaf node, it indicates end 
     // of string, so a null character is added 
     // and string is displayed 
-    if (root->ocurrence > 0)  
+    if (root->ocurrence && root->ocurrence > 0)  
     {
         str[level] = '\0';
         //printf("%s %d\n", str, root->ocurrence);
