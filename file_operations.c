@@ -27,7 +27,6 @@ bool update_output_file(char *str, int ocurrence, FILE *f){
             
             char *Stop = strrchr(buffer, ' ');
             strncpy(dictionary_entry, buffer, Stop - buffer);
-            
             if(strcmp(str, dictionary_entry) == 0){
                 write_new_number_to_correct_line(Stop, ocurrence);
             }
@@ -40,5 +39,4 @@ bool update_output_file(char *str, int ocurrence, FILE *f){
         fwrite(str_ocurrence, 1, strlen(str_ocurrence), f);
 
     }
-
 }

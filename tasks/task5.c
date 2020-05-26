@@ -73,7 +73,7 @@ void converge_to_main_root(struct node *root, char str[], int level, struct node
         str[level] = '\0';
         //printf("%s %d\n", str, root->ocurrence);
         //it should be written to the output file around here.
-        insert(main_root, str);
+        insert_with_ocurrence(main_root, str, root->ocurrence);
 
     } 
   

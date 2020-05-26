@@ -35,7 +35,6 @@
  */
 void task2(char *data[], int data_length)
 {
-    long bytes = 0;
     struct node *root = create_empty_node();
     FILE *in_file;
     FILE *out_file;
@@ -49,7 +48,6 @@ void task2(char *data[], int data_length)
             while(fgets(buffer, BUFFER_LENGTH, in_file)){
                 remove_new_line_char_from_str(buffer);
                 insert(root, buffer);
-                bytes += sizeof(struct node);
             }
         }
         else{
@@ -65,10 +63,13 @@ void task2(char *data[], int data_length)
         else
             break;
     }
+    
     display(root, buffer, 0, out_file);
+
     if (in_file != NULL)
         fclose(in_file);
     
     fclose(out_file);
+
     free_trie_allocation(root);
 }

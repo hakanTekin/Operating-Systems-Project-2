@@ -39,7 +39,8 @@ void remove_new_line_char_from_str(char *str)
 }
 int main(int argc, char **argv)
 {
-    char *datax[] = {"data-6.txt", "data-6.txt", "data-6.txt"};
+    char *datax[] = {"data-6.txt","data-1.txt","data-2.txt","data-3.txt","data-7.txt",};
+    //char *datax[] = {"data-6.txt"};
     char **data;
     int data_size;
     if (argc > 1)
@@ -58,13 +59,13 @@ int main(int argc, char **argv)
     printf("Data size is %d\n", data_size);
 
     clock_t start2 = clock();
-    task2(data, data_size);
+    //task2(data, data_size);
     clock_t end2 = clock();
 
     printf("TASK 2 FINISHED\n");
 
     clock_t start3 = clock();
-    //task3(data, data_size);
+    task3(data, data_size);
     clock_t end3 = clock();
 
     printf("TASK 3 FINISHED\n");
@@ -76,20 +77,24 @@ int main(int argc, char **argv)
     printf("TASK 4 FINISHED\n");
 
     clock_t start5 = clock();
-    //task5(data, data_size); //Memory is freed
+    task5(data, data_size); //Memory is freed
     clock_t end5 = clock();
 
+    printf("TASK 5 FINISHED\n");
+
     clock_t start6 = clock();
-   //task6(data, data_size);
+    task6(data, data_size);
     clock_t end6 = clock();
+
+    printf("TASK 6 FINISHED\n");
 
     printf("\n---All executions completed---\n");
 
-    printf("%-40s : %-20ld\n", "Task2 Execution time", end2 - start2);
-    printf("%-40s : %-20ld\n", "Task3 Execution time", end3 - start3);
-    printf("%-40s : %-20ld\n", "Task4 Execution time", end4 - start4);
-    printf("%-40s : %-20ld\n", "Task5 Execution time", end5 - start5);
-    printf("%-40s : %-20ld\n", "Task6 Execution time", end6 - start6);
+    printf("%-40s : %-20ld\n", "Task2 Execution time", (end2 - start2)/1000);
+    printf("%-40s : %-20ld\n", "Task3 Execution time", (end3 - start3)/1000);
+    printf("%-40s : %-20ld\n", "Task4 Execution time", (end4 - start4)/1000);
+    printf("%-40s : %-20ld\n", "Task5 Execution time", (end5 - start5)/1000);
+    printf("%-40s : %-20ld\n", "Task6 Execution time", (end6 - start6)/1000);
 
     return 4000;
 }

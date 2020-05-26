@@ -17,7 +17,7 @@
 #define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0]) 
   
 // Alphabet size (# of symbols) 
-#define ALPHABET_SIZE (224) 
+#define ALPHABET_SIZE (224) //224 - 93
 
 // Converts key current character into index 
 // use only 'a' through 'z' and lower case 
@@ -27,7 +27,7 @@
 
 struct node{
     int ocurrence;
-    struct node *nexts[ALPHABET_SIZE];
+    struct node **nexts;
 };
 
 struct node *create_empty_node(void){
@@ -37,6 +37,7 @@ struct node *create_empty_node(void){
     { 
         int i;
         pNode->ocurrence = 0;
+        pNode->nexts = malloc(sizeof(struct node *) * ALPHABET_SIZE);
         for (i = 0; i < ALPHABET_SIZE; i++)
             pNode->nexts[i] = NULL; 
     }
@@ -58,8 +59,24 @@ void insert(struct node *root, const unsigned char *key){
         
         pCrawl = pCrawl->nexts[index];
     }
-
     pCrawl->ocurrence++; 
+}
+void insert_with_ocurrence(struct node *root, const unsigned char *key, int oc){
+    
+    int level;
+    int length = strlen(key);
+    int index;
+    struct node *pCrawl = root;
+
+    for (level = 0; level < length; level++)
+    {
+        index = CHAR_TO_INDEX(key[level]);
+        if ( !pCrawl->nexts[index] ) 
+            pCrawl->nexts[index] = create_empty_node();
+        
+        pCrawl = pCrawl->nexts[index];
+    }
+    pCrawl->ocurrence += oc; 
 }
 
 
@@ -121,5 +138,6 @@ void free_trie_allocation(struct node* root){
         if(root->nexts[i])
             free_trie_allocation(root->nexts[i]);
     }
+    free(root->nexts);
     free(root);
 }
